@@ -46,7 +46,7 @@ export const getNormalTransactions = async (
 export const getERC20TokenTransfers = async (address: string): Promise<ERC20TokenTransfer[]> => {
   try {
     const response = await axios.get<{ result: ERC20TokenTransfer[] }>(
-      `${etherscanBaseURL}?module=account&action=tokentx&address=${address}&apikey=${ETHERSCAN_API_KEY}`
+      `${etherscanBaseURL}?module=account&action=tokentx&address=${address}&page=1&apikey=${ETHERSCAN_API_KEY}`
     );
     return response.data.result;
   } catch (error) {
@@ -56,12 +56,12 @@ export const getERC20TokenTransfers = async (address: string): Promise<ERC20Toke
 };
 
 // Function to fetch ETH price
-export const getEthPrice = async (): Promise<number> => {
+export const getEthPrice = async (): Promise<EtherPriceResponse> => {
   try {
     const response = await axios.get<{ result: EtherPriceResponse}>(
       `${etherscanBaseURL}?module=stats&action=ethprice&apikey=${ETHERSCAN_API_KEY}`
     );
-    return response.data.result.ethusd;
+    return response.data.result;
   } catch (error) {
     console.error('Error fetching ETH price:', error);
     throw error;
