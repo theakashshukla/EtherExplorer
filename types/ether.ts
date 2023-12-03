@@ -4,7 +4,9 @@ export interface NormalTransaction{
 }
 export interface ERC20TokenTransfer{
     hash: string;
-    blockNumber: number;
+    value: number;
+    from: string;
+    to: string;
 }
 
 export interface EtherPriceResponse {

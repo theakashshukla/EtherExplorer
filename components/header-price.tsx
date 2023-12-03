@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { ModeToggle } from "@/components/mode-toggle";
 import { getEthPrice, getGasPrice } from "@/app/api/etherscan";
@@ -12,21 +12,20 @@ export function HeaderPrice() {
     const fetchEtherPrice = async () => {
       try {
         const data = await getEthPrice();
-        const ethusdPrice = data; 
-        setEtherPrice(ethusdPrice);
-        console.log(ethusdPrice);
+        setEtherPrice(data.ethusd);
+        console.log(typeof data.ethusd);
       } catch (error) {
-        console.error('Error fetching Ether price:', error);
+        console.error("Error fetching Ether price:", error);
       }
     };
 
     const fetchGasPrice = async () => {
       try {
-        const data = await getGasPrice( );
-        const gasPrice = data;
-        setGasPrice(Math.round(gasPrice.suggestBaseFee));
+        const data = await getGasPrice();
+        setEtherPrice(data.suggestBaseFee);
+        console.log(typeof data.suggestBaseFee);
       } catch (error) {
-        console.error('Error fetching gas price:', error);
+        console.error("Error fetching gas price:", error);
       }
     };
 
@@ -40,7 +39,7 @@ export function HeaderPrice() {
         <div className="flex flex-1 items-center justify-start space-x-4">
           <div className="flex items-center space-x-1">
             <div className="text-sm font-medium text-gray-500">
-              ETH Price: <span className="text-blue-500">{etherPrice}</span>
+              ETH Price: <span className="text-blue-500">${etherPrice}</span>
             </div>
             <div className="text-sm font-medium text-gray-500">
               Gas: <span className="text-blue-500">{gasPrice} Gwei</span>
