@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { SiteHeader } from "@/components/site-header";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { HeaderPrice } from "@/components/header-price";
+import { Web3Modal } from "@/context/Web3Modal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -49,7 +50,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <div className="relative flex min-h-screen flex-col">
               <HeaderPrice/>
               <SiteHeader />
-              <div className="flex-1">{children}</div>
+              <div className="flex-1"><Web3Modal>{children}</Web3Modal></div>
             </div>
             <TailwindIndicator />
           </ThemeProvider>

@@ -1,36 +1,32 @@
 "use client";
-
 import { ModeToggle } from "@/components/mode-toggle";
 import { getEthPrice, getGasPrice } from "@/app/api/etherscan";
 import { useEffect, useState } from "react";
+import { PriceDisplay } from "@/components/ui/price-display";
 
 export function HeaderPrice() {
   const [etherPrice, setEtherPrice] = useState<number | null>(null);
   const [gasPrice, setGasPrice] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchEtherPrice = async () => {
+    const fetchData = async () => {
       try {
-        const data = await getEthPrice();
-        setEtherPrice(data.ethusd);
-        console.log(typeof data.ethusd);
+        const [ethPriceResponse, gasPriceResponse] = await Promise.all([
+          getEthPrice(),
+          getGasPrice(),
+        ]);
+
+        setEtherPrice(ethPriceResponse.ethusd);
+        setGasPrice(gasPriceResponse.suggestBaseFee);
+        setLoading(false);
       } catch (error) {
-        console.error("Error fetching Ether price:", error);
+        console.error('Error fetching data:', error);
+        setLoading(false);
       }
     };
 
-    const fetchGasPrice = async () => {
-      try {
-        const data = await getGasPrice();
-        setEtherPrice(data.suggestBaseFee);
-        console.log(typeof data.suggestBaseFee);
-      } catch (error) {
-        console.error("Error fetching gas price:", error);
-      }
-    };
-
-    fetchEtherPrice();
-    fetchGasPrice();
+    fetchData();
   }, []);
 
   return (
@@ -38,12 +34,20 @@ export function HeaderPrice() {
       <div className="container flex h-12 items-center">
         <div className="flex flex-1 items-center justify-start space-x-4">
           <div className="flex items-center space-x-1">
-            <div className="text-sm font-medium text-gray-500">
-              ETH Price: <span className="text-blue-500">${etherPrice}</span>
-            </div>
-            <div className="text-sm font-medium text-gray-500">
-              Gas: <span className="text-blue-500">{gasPrice} Gwei</span>
-            </div>
+            <PriceDisplay
+              label="ETH Price"
+              value={etherPrice}
+              loading={loading}
+              decimals={2} 
+              showDollarSign 
+            />
+            <PriceDisplay
+              label="Gas"
+              value={gasPrice}
+              loading={loading}
+              roundValue 
+              lastGwei
+            />
           </div>
         </div>
 
