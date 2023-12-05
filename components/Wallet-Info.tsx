@@ -8,6 +8,7 @@ import {
 } from "wagmi";
 import { ConnectButton } from "./Wallet-Connect";
 import { AddressDetails } from "./AddressDetails";
+import { Button } from "./ui/button";
 
 export function WalletInfo() {
   const { address, connector: activeConnector, isConnected } = useAccount();
@@ -20,6 +21,7 @@ export function WalletInfo() {
     return (
       <div>
         <div className="flex items-center divide-x-2 divide-gray-500 dark:divide-gray-700">
+          <ConnectButton/>
           <div className="pr-3 font-medium text-gray-900 dark:text-white">
             Address
           </div>
@@ -37,10 +39,12 @@ export function WalletInfo() {
           
         </div>
         <>
-          {isConnected && <div>Connected to {activeConnector?.name}</div>}
+          {isConnected && <div className="my-8">Connected to {activeConnector?.name}</div>}
 
           {connectors.map((connector) => (
-            <button
+            <Button 
+              className="m-2"
+              variant="outline"
               disabled={!connector.ready}
               key={connector.id}
               onClick={() => connect({ connector })}
@@ -51,7 +55,7 @@ export function WalletInfo() {
                   pendingConnector?.id === connector.id &&
                   " (connecting)"}
               </div>
-            </button>
+            </Button>
           ))}
 
           {error && <div>{error.message}</div>}

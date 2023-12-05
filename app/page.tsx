@@ -13,7 +13,7 @@ export default function Home() {
           Welcome to Ether Explorer
         </h1>
         <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
-          This is a simple Ethereum explorer that allows you to search for
+          Ethereum explorer that allows you to search for
           blocks, transactions, and addresses. View ETH price and ERC-20 token
         </p>
         <div className="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
