@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { PriceDisplay } from "@/components/ui/price-display";
 
 export function HeaderPrice() {
-  const [etherPrice, setEtherPrice] = useState<number | null>(null);
+  const [etherPrice, setEtherPrice] = useState<string | null>(null);
   const [gasPrice, setGasPrice] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
 

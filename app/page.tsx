@@ -1,13 +1,22 @@
-import { AddressDetails } from "@/components/AddressDetails";
+'use client';
+import { SearchBar } from "@/components/SearchBar";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
   return (
     <main className="flex flex-col justify-center m-2">
-  
-      <AddressDetails 
-        address="0x1f9090aaE28b8a3dCeaDf281B0F12828e676c326"
-      />
-      
+      <div>
+      <Button
+        className="m-5"
+        type="button"
+        onClick={() => router.push("/profile")}
+      >
+        Profile
+      </Button>
+      <SearchBar />
+    </div>
     </main>
   );
 }
