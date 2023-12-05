@@ -4,7 +4,6 @@ import { useSearchParams } from "next/navigation";
 import { search } from "@/app/api/search";
 import { AddressDetails } from "@/components/AddressDetails";
 
-
 export default function SearchResultsPage() {
   const searchParams = useSearchParams();
   const query = searchParams.get("q");

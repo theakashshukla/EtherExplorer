@@ -8,6 +8,7 @@ import {
   getERC20TokenTransfers,
 } from "@/app/api/etherscan";
 import { NormalTransaction, ERC20TokenTransfer } from "@/types/ether";
+import { convertTokenToETH } from "@/utils/ethUtils";
 
 export function AddressDetails({ address }: { address: string }) {
   const [etherBalance, setEtherBalance] = useState<string | null>(null);
@@ -74,7 +75,7 @@ export function AddressDetails({ address }: { address: string }) {
             Ether Balance
           </div>
           <div className="pl-3 text-sm font-light text-gray-500 dark:text-gray-400">
-            {etherBalance}
+          {etherBalance !== null ? convertTokenToETH(Number(etherBalance)) : 'N/A'}
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mb-4">
@@ -107,13 +108,15 @@ export function AddressDetails({ address }: { address: string }) {
                       className="border-b dark:border-gray-700"
                     >
                       <td className="px-4 py-3">
-                        {truncateString(transaction.hash, 15)}
+                        {truncateString(transaction.hash, 12)}
                       </td>
                       <td className="px-4 py-3">
-                        {truncateString(transaction.from, 15)}
+                        {truncateString(transaction.from, 12)}
                       </td>
                       <td className="px-4 py-3">{transaction.blockNumber}</td>
-                      <td className="px-4 py-3">{transaction.value}</td>
+                      <td className="px-4 py-3">
+                        {convertTokenToETH(transaction.value)}
+                      </td>
                     </tr>
                   ))}
               </table>
@@ -174,15 +177,17 @@ export function AddressDetails({ address }: { address: string }) {
                     <tbody key={transfer.hash}>
                       <tr className="border-b dark:border-gray-700">
                         <td className="px-4 py-3">
-                          {truncateString(transfer.hash, 15)}
+                          {truncateString(transfer.hash, 12)}
                         </td>
                         <td className="px-4 py-3">
-                          {truncateString(transfer.from, 15)}
+                          {truncateString(transfer.from, 12)}
                         </td>
                         <td className="px-4 py-3">
-                          {truncateString(transfer.to, 15)}
+                          {truncateString(transfer.to, 12)}
                         </td>
-                        <td className="px-4 py-3">{transfer.value}</td>
+                        <td className="px-4 py-3">
+                          {convertTokenToETH(transfer.value)}
+                        </td>
                       </tr>
                     </tbody>
                   ))}

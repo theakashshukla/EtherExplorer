@@ -1,6 +1,6 @@
 import { siteConfig } from "@/config/site";
 import { MainNav } from "@/components/main-nav";
-import { ConnectButton } from "@/components/Wallet-Connect";
+import { SearchBar } from "./SearchBar";
 
 export function SiteHeader() {
   return (
@@ -8,7 +8,7 @@ export function SiteHeader() {
       <div className="container flex h-14 items-center">
         <MainNav items={siteConfig.mainNav} />
         <div className="flex flex-1 items-center justify-end space-x-4 ">
-          <ConnectButton/>
+          <SearchBar />
         </div>
       </div>
     </header>
