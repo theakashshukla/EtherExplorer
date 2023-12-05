@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { search } from "@/app/api/search";
 import { AddressDetails } from "@/components/AddressDetails";
-import { useBalance } from "wagmi";
+
 
 export default function SearchResultsPage() {
   const searchParams = useSearchParams();
