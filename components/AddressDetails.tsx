@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { SearchBar } from "./SearchBar";
 import { formatEther } from "viem";
 import {
   getEtherBalance,
@@ -69,7 +68,7 @@ export function AddressDetails({ address }: { address: string }) {
 
   return (
     <div>
-      <div className="border-gray-300 dark:border-gray-600 py-4">
+      <div className="border-gray-300 dark:border-gray-600 py-2">
         <div className="flex items-center divide-x-2 divide-gray-500 dark:divide-gray-700 mb-5">
           <div className="pr-3 font-medium text-gray-900 dark:text-white">
             Ether Balance

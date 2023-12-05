@@ -48,11 +48,13 @@ export default function SearchResultsPage() {
       <div className="m-5">
         <AddressDetails address={query || ""} />
       </div>
-      {!loading && searchResult && (
-        <div>
-          <pre>{JSON.stringify(searchResult, null, 2)}</pre>
-        </div>
-      )}
+      <div className="m-6">
+        {!loading && searchResult && (
+          <div>
+            <pre>{JSON.stringify(searchResult, null, 2)}</pre>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
