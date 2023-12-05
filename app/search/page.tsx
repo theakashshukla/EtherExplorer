@@ -1,13 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import {
-  getAddressDetails,
-  getTransactionDetails,
-  getTokenDetails,
-  search,
-} from "@/app/api/search";
+import { search } from "@/app/api/search";
 import { AddressDetails } from "@/components/AddressDetails";
+import { useBalance } from "wagmi";
 
 export default function SearchResultsPage() {
   const searchParams = useSearchParams();
@@ -28,7 +24,6 @@ export default function SearchResultsPage() {
         const result = await search(query);
         setSearchResult(result);
         console.log("result: ", result);
-
       } catch (error) {
         console.error("Error fetching search results:", error);
       } finally {
@@ -42,27 +37,22 @@ export default function SearchResultsPage() {
 
   return (
     <div>
-      <h1>Search Results for: {query}</h1>
-      
-      {loading && <p>Loading...</p>}
-      {/* {!loading && searchResult && (
-        <div>
-          {searchResult.type === "transaction" && (
-            <p>Transaction Hash: {searchResult.txHash}</p>
-          )}
-          {searchResult.type === "address" && (
-            <p>Address: {searchResult.address}</p>
-          )}
+      <div className="flex items-center divide-x-2 divide-gray-500 dark:divide-gray-700 m-6">
+        <div className="pr-3 font-medium text-gray-900 dark:text-white">
+          Search Query
         </div>
-      )} */}
-      {/* <p>Transaction Hash: {searchResult}</p> */}
-          
+        <div className="pl-3 text-sm font-light text-gray-500 dark:text-gray-400">
+          {query}
+        </div>
+      </div>
+      <div className="m-5">
+        <AddressDetails address={query || ""} />
+      </div>
       {!loading && searchResult && (
         <div>
           <pre>{JSON.stringify(searchResult, null, 2)}</pre>
         </div>
       )}
-      
     </div>
   );
 }
