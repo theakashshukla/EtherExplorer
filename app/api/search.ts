@@ -1,29 +1,29 @@
-import { makeEtherscanRequest } from '@/app/api/etherscan';
+import { makeEtherscanRequest } from "@/app/api/etherscan";
 
 export const search = async (query: string) => {
-  if (query.length === 66 && /^[0-9a-fA-F]+$/.test(query)) {
-    // It might be a transaction hash
+  if (query.length === 66 && /^0x[0-9a-fA-F]+$/.test(query)) {
     return getTransactionDetails(query);
-  } else if (query.length === 42 && /^[0-9a-fA-F]+$/.test(query)) {
-    // It's likely an Ethereum address
+  } else if (query.length === 42 && /^0x[0-9a-fA-F]+$/.test(query)) {
     return getAddressDetails(query);
-  } else {
-    // Assume it's a token query or another kind of search
+  } else if (query.length === 42 && /^0x[0-9a-fA-F]+$/.test(query)) {
     return getTokenDetails(query);
+  } else {
+    return "unknown";
   }
 };
 
 export const getTransactionDetails = async (txHash: string) => {
-  return makeEtherscanRequest('proxy', 'eth_getTransactionByHash', { txhash: txHash });
+  return makeEtherscanRequest("proxy", "eth_getTransactionByHash", {
+    txhash: txHash,
+  });
 };
 
 export const getAddressDetails = async (address: string) => {
-  return makeEtherscanRequest('account', 'balance', { address });
+  return makeEtherscanRequest("account", "balance", { address });
 };
 
-export const getTokenDetails = async (tokenAddress: string) => {
-  // Implement logic to fetch token details using the Etherscan API
-  // For example, you can use the 'token' module in the API
-  return makeEtherscanRequest('token', 'tokeninfo', { contractaddress: tokenAddress });
+export const getTokenDetails = async (tokenContractAddress: string) => {
+  return makeEtherscanRequest("token", "totalsupply", {
+    contractaddress: tokenContractAddress,
+  });
 };
-

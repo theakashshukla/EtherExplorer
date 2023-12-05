@@ -1,18 +1,20 @@
-export interface NormalTransaction{
-    hash: string;
-    blockNumber: number;
+export interface NormalTransaction {
+  blockNumber: number;
+  hash: string;
+  from: string;
+  value: number;
 }
-export interface ERC20TokenTransfer{
-    hash: string;
-    value: number;
-    from: string;
-    to: string;
+export interface ERC20TokenTransfer {
+  hash: string;
+  from: string;
+  to: string;
+  value: number;
+}
+export interface EtherPriceResponse {
+  ethusd: number;
 }
 
-export interface EtherPriceResponse {
-    ethusd: number;
-  }
-  
-  export interface GasPriceResponse {
-    suggestBaseFee: number;
-  }
+export interface GasPriceResponse {
+  suggestBaseFee: string;
+}
+
