@@ -20,12 +20,12 @@ export function WalletInfo() {
   if (address) {
     return (
       <div>
-        <div className="flex items-center divide-x-2 divide-gray-500 dark:divide-gray-700">
+        <div className="flex items-center divide-x-2 divide-gray-500 dark:divide-gray-700 mb-4">
           <ConnectButton/>
       
         </div>
         <div className="flex items-center divide-x-2 divide-gray-500 dark:divide-gray-700">
-          <ConnectButton/>
+          
           <div className="pr-3 font-medium text-gray-900 dark:text-white">
             Address
           </div>
