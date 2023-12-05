@@ -44,9 +44,13 @@ export default function SearchResultsPage() {
           {query}
         </div>
       </div>
-      <div className="m-5">
-        <AddressDetails address={query || ""} />
-      </div>
+      
+      { "address" && (
+        <div className="m-5">
+          <AddressDetails address={query || ""} />
+        </div>
+      )}
+     
       <div className="m-6">
         {!loading && searchResult && (
           <div>

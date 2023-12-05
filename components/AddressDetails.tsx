@@ -18,6 +18,11 @@ export function AddressDetails({ address }: { address: string }) {
   const [tokenTransfers, setTokenTransfers] = useState<ERC20TokenTransfer[]>(
     []
   );
+  const [loadingEtherBalance, setLoadingEtherBalance] = useState(true);
+  const [loadingNormalTransactions, setLoadingNormalTransactions] =
+    useState(true);
+  const [loadingTokenTransfers, setLoadingTokenTransfers] = useState(true);
+
 
   function truncateString(str: string, num: number): string {
     if (str.length <= num) {
@@ -32,30 +37,47 @@ export function AddressDetails({ address }: { address: string }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch ether balance
+        setLoadingEtherBalance(true);
         const balance = await getEtherBalance(address);
         const ethBal = formatEther(balance);
         setEtherBalance(ethBal);
-
-        // Fetch normal transactions
+      } catch (error) {
+        console.error("Error fetching ether balance:", error);
+      } finally {
+        setLoadingEtherBalance(false);
+      }
+  
+      try {
+        setLoadingNormalTransactions(true);
         const transactions = await getNormalTransactions(
           address,
           currentPage,
           itemsPerPage
         );
         setNormalTransactions(transactions);
-
-        // Fetch ERC-20 token transfers
-        const tokenTransfersData: ERC20TokenTransfer[] =
-          await getERC20TokenTransfers(address, itemsPerPage);
+      } catch (error) {
+        console.error("Error fetching normal transactions:", error);
+      } finally {
+        setLoadingNormalTransactions(false);
+      }
+  
+      try {
+        setLoadingTokenTransfers(true);
+        const tokenTransfersData = await getERC20TokenTransfers(
+          address,
+          currentPage,
+          itemsPerPage
+        );
         setTokenTransfers(tokenTransfersData);
       } catch (error) {
-        console.error("Error fetching address details:", error);
+        console.error("Error fetching token transfers:", error);
+      } finally {
+        setLoadingTokenTransfers(false);
       }
     };
-
+  
     fetchData();
-  }, [address, currentPage]); // Include currentPage in the dependency array
+  }, [address, currentPage]);
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
@@ -67,6 +89,8 @@ export function AddressDetails({ address }: { address: string }) {
     return data.slice(startIndex, endIndex);
   };
 
+ 
+
   return (
     <div>
       <div className="border-gray-300 dark:border-gray-600 py-2">
@@ -75,7 +99,9 @@ export function AddressDetails({ address }: { address: string }) {
             Ether Balance
           </div>
           <div className="pl-3 text-sm font-light text-gray-500 dark:text-gray-400">
-          {etherBalance !== null ? convertTokenToETH(Number(etherBalance)) : 'N/A'}
+            {etherBalance !== null
+              ? convertTokenToETH(Number(etherBalance))
+              : "N/A"}
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 mb-4">

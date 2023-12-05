@@ -53,28 +53,12 @@ export const getNormalTransactions = async (
   });
 };
 
-
 export const getERC20TokenTransfers = async (address: string, page: number = 1, pageSize: number = 10) => {
   return makeEtherscanRequest('account', 'tokentx', {
     address,
     page,
     offset: pageSize,
   });
-};
-
-
-export const getTransactionDetails = async (txHash: string) => {
-  return makeEtherscanRequest('proxy', 'eth_getTransactionByHash', { txhash: txHash });
-};
-
-export const getAddressDetails = async (address: string) => {
-  return makeEtherscanRequest('account', 'balance', { address });
-};
-
-export const getTokenDetails = async (tokenAddress: string) => {
-  // Implement logic to fetch token details using the Etherscan API
-  // For example, you can use the 'token' module in the API
-  return makeEtherscanRequest('token', 'tokeninfo', { contractaddress: tokenAddress });
 };
 
 
